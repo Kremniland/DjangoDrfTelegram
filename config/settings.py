@@ -3,6 +3,8 @@ from datetime import timedelta
 from pathlib import Path
 import environ
 
+AUTH_USER_MODEL = 'users.User'
+
 root = environ.Path(__file__) - 2
 
 # print(root)
@@ -17,7 +19,6 @@ SECRET_KEY = env.str('SECRET_KEY')
 DEBUG = env.bool('DEBUG', True)
 ALLOWED_HOSTS = env.str('ALLOWED_HOSTS', default='').split(' ')
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -31,9 +32,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'corsheaders',
+    'phonenumber_field',
 
-
+    'src.users',
     'api',
+
 
     'drf_spectacular', # после всех приложений ставится
 ]
