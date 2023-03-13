@@ -4,6 +4,8 @@ from pathlib import Path
 import environ
 
 AUTH_USER_MODEL = 'users.User'
+# чтобы вместо логина можно прописывать username, mail, phone_number
+AUTHENTICATION_BACKENDS = ('src.users.backends.AuthBackend',)
 
 root = environ.Path(__file__) - 2
 

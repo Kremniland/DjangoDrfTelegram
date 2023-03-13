@@ -16,6 +16,7 @@ class User(AbstractUser):
     avatar = models.ImageField(upload_to='image/avatar_user/', null=True, blank=True, verbose_name='Фотография')
 
     USERNAME_FIELD = 'username' # поле должно быть уникальным какое поле используется логин по умолчанию username
+                                # но так прописали backends то username проверяется по  username, mail, phone_number
     # REQUIRED_FIELDS = [] # обязательные поля
 
     objects = CustomUserManager() # переопределяем менеджер на свой
