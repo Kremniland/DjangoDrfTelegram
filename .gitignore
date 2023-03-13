@@ -4,6 +4,9 @@ __pycache__/
 *$py.class
 
 .idea
+
+telegramm_bot/config.py
+
 # C extensions
 *.so
 

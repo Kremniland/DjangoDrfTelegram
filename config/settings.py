@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'phonenumber_field',
 
-    'src.users',
+    'src.users', # прописываем самым первым для переопределения юзера
     'api',
 
 
