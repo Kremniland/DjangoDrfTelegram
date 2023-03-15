@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager
 from rest_framework.exceptions import ParseError
 
+
 class CustomUserManager(BaseUserManager):
     use_in_migrations = True # чтобы проходили миграции
 
@@ -29,7 +30,7 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_active', True)
 
         return self._create_user(
-            phone_number, email, password, username, **extra_fields
+            phone_number, username, email, password, **extra_fields
         )
 
     def create_superuser(self, phone_number=None, email=None, password=None, username=None, **extra_fields):
@@ -38,7 +39,7 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_active', True)
 
         return self._create_user(
-            phone_number, email, password, username, **extra_fields
+            phone_number, username, email, password, **extra_fields
         )
 
 
