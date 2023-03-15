@@ -60,6 +60,7 @@ class MeView(generics.RetrieveUpdateAPIView):
 
     queryset = User.objects.all()
     serializer_class = MeSerializer
+    http_method_names = ('get', 'patch', ) # метод пут скрыл из-за ненадобности
 
     def get_serializer_class(self):
         '''переопределяем get_serializer_class для использования

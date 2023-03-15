@@ -21,6 +21,8 @@ SECRET_KEY = env.str('SECRET_KEY')
 DEBUG = env.bool('DEBUG', True)
 ALLOWED_HOSTS = env.str('ALLOWED_HOSTS', default='').split(' ')
 
+TOKEN = env.str('TOKEN')
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
 
     'src.users', # прописываем самым первым для переопределения юзера
     'api',
+    'src.telegram',
 
 
     'drf_spectacular', # после всех приложений ставится
