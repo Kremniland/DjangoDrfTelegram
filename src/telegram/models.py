@@ -29,6 +29,7 @@ class Message(models.Model):
 
     class Meta:
         db_table = 'message'
+        ordering = ('-create_date',)
         verbose_name = 'Сообщение'
         verbose_name_plural = 'Сообщения'
 

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken', # Для использования стандартной библиотеки авторизации по токенам
     'djoser',
     'corsheaders',
     'phonenumber_field',
@@ -41,7 +42,6 @@ INSTALLED_APPS = [
     'src.users', # прописываем самым первым для переопределения юзера
     'api',
     'src.telegram',
-
 
     'drf_spectacular', # после всех приложений ставится
 ]
@@ -140,7 +140,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FileUploadParser',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 2,
+    'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': [ # Аутентификация
         # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication', # Для JWT регистрации
         'rest_framework.authentication.TokenAuthentication', # по токену Для Djoser
