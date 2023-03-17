@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env.str('PG_DATABASE', default='RealProject'),
+        'NAME': env.str('PG_DATABASE', default='postgres'),
         'USER': env.str('PG_USER', default='postgres'),
         'PASSWORD': env.str('PG_PASSWORD', default='1'),
         'HOST': env.str('DB_HOST', default='localhost'),
@@ -150,11 +150,13 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     # 'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
 }
+
 # CORS HEADERS===============================================
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ['*']
 CSRF_COOKIE_SECURE = False
+
 # SPECTACULAR===============================================================
 SPECTACULAR_SETTINGS = {
     'TITLE': 'DjangoDRFTelegram',
@@ -178,12 +180,13 @@ SPECTACULAR_SETTINGS = {
     'COMPONENT_SPLIT_REQUEST': True,
     'SORT_OPERATIONS': False,
 }
+
 # Djoser====================================================================
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '#/activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': False,
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}', # для подтверждения сброса пароля
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}', # для сброса пользователя
+    'ACTIVATION_URL': '#/activate/{uid}/{token}', # для активации
+    'SEND_ACTIVATION_EMAIL': True, # отправка емаил True
     'SERIALIZERS': {},
 }
 
@@ -198,7 +201,7 @@ SIMPLE_JWT = {
     'AUDIENCE': None,
     'ISSUER': None,
 
-    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_TYPES': ('Bearer',), # смотрит JWT токен в хедере со значением Bearer
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
 
@@ -211,6 +214,18 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=1),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=7),
 }
+# EMAIL ======================================================================
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+KEY_MAIL = env.str('KEY_MAIL') # Загружаем из .env
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'chausovo@mail.ru' # Почта отправителя
+EMAIL_HOST_PASSWORD = KEY_MAIL # Пароль для внешнего приложения
+EMAIL_USE_TLS = False # Шифрование TSL
+EMAIL_USE_SSL = True # Шифрование SSL
+DEFAULT_FROM_EMAIL = 'django-auth@Kantegory.me' # как бы генерирует разные почтовые ящики
+
 # Для вывода ORM запросов в консоль===========================
 LOGGING = {
     'version': 1,

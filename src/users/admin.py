@@ -16,7 +16,7 @@ class UserAdmin(UserAdmin): # Наследуемся от UserAdmin
     fieldsets = (
         (None, {'fields': ('phone_number', 'email', 'username', 'tg_user_id')}),
         (_('Личная информация'),
-         {'fields': ('first_name', 'last_name', 'avatar',)}),
+         {'fields': ('first_name', 'last_name', 'avatar', 'is_verified',)}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
         }),

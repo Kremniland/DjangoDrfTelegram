@@ -15,6 +15,8 @@ class User(AbstractUser):
     tg_user_id = models.IntegerField(null=True, blank=True, verbose_name='Телеграм ID')
     avatar = models.ImageField(upload_to='image/avatar_user/', null=True, blank=True, verbose_name='Фотография')
 
+    is_verified = models.BooleanField(default=False, verbose_name='Верификация')
+
     USERNAME_FIELD = 'username' # поле должно быть уникальным какое поле используется логин по умолчанию username
                                 # но так прописали backends то username проверяется по  username, mail, phone_number
     # REQUIRED_FIELDS = [] # обязательные поля
@@ -25,6 +27,7 @@ class User(AbstractUser):
         db_table = 'user'
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+        unique_together = ('username', 'email',) # делаем уникальный составной ключ
 
     @property # можем обратиться к full_name но в модели его не будет
     def full_name(self):

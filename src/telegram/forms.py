@@ -15,3 +15,4 @@ class MessageForm(forms.ModelForm):
         widgets = {
             'text': forms.Textarea,
         }
+

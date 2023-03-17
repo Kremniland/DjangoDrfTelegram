@@ -5,19 +5,22 @@ User = get_user_model()
 
 
 class AuthBackend(object):
-    '''Можно вместо username вводить емаил, имя или номер телефона'''
-    supports_object_permissions = True
-    supports_anonymous_user = True
-    supports_inactive_user = True
+    '''Позврляет изменить авторизацию на самом низком уровне с любой аторизацией
+    Можно вместо username вводить емаил, имя или номер телефона'''
+    supports_object_permissions = True # поддержка пермишинов на уровне объектов модели
+    supports_anonymous_user = True # False - выключение могут ли логиниться анонимные пользователи
+    supports_inactive_user = True # False - не авторизуем не активных пользователей
 
     def get_user(self, user_id):
+        '''служебный метод без которого не будет работать данный backend'''
         try:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
 
     def authenticate(self, request, username, password):
-        '''Проверяем username полям username, email, phone_number а не только по username'''
+        '''Проверяем username полям username, email, phone_number а не только по username
+        и проверяем правильно ли пользователь ввел пароль'''
         try:
             user = User.objects.get(
                 Q(username=username) |
@@ -26,4 +29,4 @@ class AuthBackend(object):
             )
         except User.DoesNotExist:
             return None
-        return user if user.check_password(password) else None
+        return user if user.check_password(password) else None # правильно ли пользователь ввел пароль

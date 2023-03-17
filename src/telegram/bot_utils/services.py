@@ -66,11 +66,11 @@ def add_user_message(message: types.Message):
             'username': message.from_user.username,
         }
     )
-    logger.info(user)
+    # logger.info(user)
     Message(
         user_id=user,
         chat_id=message.chat.id,
         text=message.text
     ).save()
     mes = Message.objects.filter(user_id=user).first()
-    logger.info(mes.user_id.username)
+    logger.info(mes)

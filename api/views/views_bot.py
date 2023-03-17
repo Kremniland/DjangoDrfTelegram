@@ -40,7 +40,7 @@ class UserTgView(viewsets.ModelViewSet):
 class MessageView(generics.ListAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    authentication_classes = (TokenAuthentication,)
+    # authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
 

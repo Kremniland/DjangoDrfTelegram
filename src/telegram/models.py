@@ -18,7 +18,7 @@ class UserTg(models.Model):
 
 class Message(models.Model):
     text = models.TextField(verbose_name='Текст сообщения')
-    chat_id = models.IntegerField(verbose_name='Чат ID')
+    chat_id = models.BigIntegerField(verbose_name='Чат ID')
     create_date = models.DateTimeField(auto_now_add=True)
     user_id = models.ForeignKey(
         to=UserTg,
