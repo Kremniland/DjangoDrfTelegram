@@ -20,6 +20,7 @@ BASE_DIR = root()
 SECRET_KEY = env.str('SECRET_KEY')
 DEBUG = env.bool('DEBUG', True)
 ALLOWED_HOSTS = env.str('ALLOWED_HOSTS', default='').split(' ')
+DOMAIN_NAME = env.str('DOMAIN_NAME')
 
 TOKEN = env.str('TOKEN')
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'src.users', # прописываем самым первым для переопределения юзера
     'api',
     'src.telegram',
+    'src.common',
 
     'drf_spectacular', # после всех приложений ставится
 ]
@@ -63,7 +65,9 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -215,16 +219,19 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=7),
 }
 # EMAIL ======================================================================
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-KEY_MAIL = env.str('KEY_MAIL') # Загружаем из .env
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'chausovo@mail.ru' # Почта отправителя
-EMAIL_HOST_PASSWORD = KEY_MAIL # Пароль для внешнего приложения
-EMAIL_USE_TLS = False # Шифрование TSL
-EMAIL_USE_SSL = True # Шифрование SSL
-DEFAULT_FROM_EMAIL = 'django-auth@Kantegory.me' # как бы генерирует разные почтовые ящики
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # для отправки в консоль
+else:
+    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    KEY_MAIL = env.str('KEY_MAIL') # Загружаем из .env
+    EMAIL_HOST = 'smtp.mail.ru'
+    EMAIL_PORT = 465
+    EMAIL_HOST_USER = 'chausovo@mail.ru' # Почта отправителя
+    EMAIL_HOST_PASSWORD = KEY_MAIL # Пароль для внешнего приложения
+    EMAIL_USE_TLS = False # Шифрование TSL
+    EMAIL_USE_SSL = True # Шифрование SSL
+    DEFAULT_FROM_EMAIL = 'django-auth@Kantegory.me' # как бы генерирует разные почтовые ящики
 
 # Для вывода ORM запросов в консоль===========================
 LOGGING = {

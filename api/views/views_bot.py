@@ -43,6 +43,15 @@ class MessageView(generics.ListAPIView):
     # authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
+    def get(self, request, *args, **kwargs):
+        logger.info('=========== request ==============')
+        logger.info(self.request.META.get('REMOTE_ADDR')) # IP address
+        logger.info('============ args ================')
+        logger.info(self.args)
+        logger.info('============ kwargs ==============')
+        logger.info(self.kwargs)
+        logger.info('==================================')
+        return self.list(request, *args, **kwargs)
 
     def get_queryset(self):
         user_id = self.kwargs.get('pk')

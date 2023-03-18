@@ -13,6 +13,7 @@ urlpatterns = [
     path('djoser/', include('djoser.urls.authtoken')),
     path('users/', include('src.users.urls')),
     path('api/', include('api.urls')),
+    path('', include('src.common.urls')),
 
 
     # YOUR PATTERNS
