@@ -15,6 +15,7 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('', include('src.common.urls')),
 
+    # path('accounts/', include('allauth.urls')),
 
     # YOUR PATTERNS
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
@@ -26,3 +27,4 @@ urlpatterns = [
 # Для статики:
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

@@ -1,9 +1,13 @@
+import uuid
+from datetime import timedelta
+from django.utils.timezone import now
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.exceptions import ParseError
 from loguru import logger
 
+from src.common.models import EmailVerification
 from src.users.models import Profile
 
 User = get_user_model()
@@ -40,6 +44,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             raise ParseError(
                 'Такая почта уже существует'
             )
+
         return email
 
     def validate_password(self, value):
@@ -52,6 +57,17 @@ class RegistrationSerializer(serializers.ModelSerializer):
         # create_user встроенная ф-ия которая при сохранении нового пользователя
         # пароль в базе сохранит хэшом
         user = User.objects.create_user(**validated_data)
+        # делаем верификацию через email через модель EmailVerification
+        # время жизни ссылки
+        expiration = now() + timedelta(hours=48)
+        # формируем и записываем объект EmailVerification
+        record = EmailVerification.objects.create(
+            code=uuid.uuid4(),
+            user=user,
+            expiration=expiration
+        )
+        # Вызываем метод прописанный в модели для отправки email
+        record.send_verification_mail()
         return user
 
 

@@ -20,6 +20,7 @@ django-environ = "^0.10.0"
 loguru = "^0.6.0"
 django-crum = "^0.7.9"
 aiogram = "^2.25.1"
+django-allauth = "^0.53.0"
 
 
 [build-system]

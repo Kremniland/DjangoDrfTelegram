@@ -24,8 +24,11 @@ DOMAIN_NAME = env.str('DOMAIN_NAME')
 
 TOKEN = env.str('TOKEN')
 
-# Application definition
+# Редиректы для авторизации и после авторизации
+LOGIN_URL = 'login/'
+LOGIN_REDIRECT_URL = '/profile/'
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,6 +48,13 @@ INSTALLED_APPS = [
     'src.telegram',
     'src.common',
 
+    # Для allauth
+    # 'django.contrib.sites',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.github',
+
     'drf_spectacular', # после всех приложений ставится
 ]
 
@@ -61,7 +71,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -79,6 +88,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -124,6 +134,25 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# OAuth ================================================
+# AUTHENTICATION_BACKENDS = [
+#     # Needed to login by username in Django admin, regardless of `allauth`
+#     'django.contrib.auth.backends.ModelBackend',
+#     # `allauth` specific authentication methods, such as login by e-mail
+#     'allauth.account.auth_backends.AuthenticationBackend',
+# ]
+# SITE_ID = 1
+# # Для allauth Provider specific settings
+# SOCIALACCOUNT_PROVIDERS = {
+#     'github': {
+#         'SCOPE': [
+#             'user',
+#             'repo',
+#             'read:org',
+#         ],
+#     }
+# }
 
 # DRF =======================================================================
 REST_FRAMEWORK = {
@@ -219,19 +248,24 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=7),
 }
 # EMAIL ======================================================================
-
+KEY_MAIL = env.str('KEY_MAIL')
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # для отправки в консоль
 else:
     # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    KEY_MAIL = env.str('KEY_MAIL') # Загружаем из .env
-    EMAIL_HOST = 'smtp.mail.ru'
+    EMAIL_HOST = 'smtp.yandex.com'  # 'smtp.mail.ru'
     EMAIL_PORT = 465
-    EMAIL_HOST_USER = 'chausovo@mail.ru' # Почта отправителя
-    EMAIL_HOST_PASSWORD = KEY_MAIL # Пароль для внешнего приложения
-    EMAIL_USE_TLS = False # Шифрование TSL
-    EMAIL_USE_SSL = True # Шифрование SSL
-    DEFAULT_FROM_EMAIL = 'django-auth@Kantegory.me' # как бы генерирует разные почтовые ящики
+    EMAIL_HOST_USER = 'kremniland@yandex.ru'  # Почта отправителя
+    EMAIL_HOST_PASSWORD = KEY_MAIL  # KEY_MAIL # Пароль для внешнего приложения
+    EMAIL_USE_SSL = True  # Шифрование SSL
+    # EMAIL_USE_TLS = False # Шифрование TSL
+    # DEFAULT_FROM_EMAIL = 'django-auth@Kantegory.me' # как бы генерирует разные почтовые ящики
+
+# EMAIL_HOST = 'smtp.yandex.com'  # 'smtp.mail.ru'
+# EMAIL_PORT = 465
+# EMAIL_HOST_USER = 'kremniland@yandex.ru'  # Почта отправителя
+# EMAIL_HOST_PASSWORD = KEY_MAIL  # KEY_MAIL # Пароль для внешнего приложения
+# EMAIL_USE_SSL = True  # Шифрование SSL
 
 # Для вывода ORM запросов в консоль===========================
 LOGGING = {
